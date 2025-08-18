@@ -124,6 +124,9 @@ jobs:
           fi
           ~/oi/test/run.sh "$@"
 
+      - name: Test ${{ matrix.name }}
+        run: ${{ matrix.runs.test }}
+
       # Export digest to a file to reference it later in merging manifests
       - name: Export digest
         id: export-digest
