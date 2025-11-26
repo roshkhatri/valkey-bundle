@@ -4,9 +4,9 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM docker.io/valkey/valkey:9.0.0-rc3-trixie AS build
+FROM docker.io/valkey/valkey:9.0.0-trixie AS build
 
-ARG SERVER_VERSION=9.0.0-rc3
+ARG SERVER_VERSION=9.0.0
 
 RUN set -eux;   \
                 \
@@ -40,7 +40,7 @@ WORKDIR /opt
 RUN set -eux; \
     git clone --depth 1 --branch 1.0.2 https://github.com/valkey-io/valkey-json.git; \
     git clone --depth 1 --branch 1.0.0 https://github.com/valkey-io/valkey-bloom.git; \
-    git clone --depth 1 --branch 1.0.1 https://github.com/valkey-io/valkey-search.git; \
+    git clone --depth 1 --branch 1.0.2 https://github.com/valkey-io/valkey-search.git; \
     git clone --depth 1 --branch 1.0.0 https://github.com/valkey-io/valkey-ldap.git;
 
 # Build JSON module
@@ -61,7 +61,7 @@ RUN set -eux; \
 WORKDIR /opt/valkey-ldap
 RUN cargo build --all --all-targets --release;
 
-FROM docker.io/valkey/valkey:9.0.0-rc3-trixie
+FROM docker.io/valkey/valkey:9.0.0-trixie
 
 RUN mkdir -p /usr/lib/valkey;
 
