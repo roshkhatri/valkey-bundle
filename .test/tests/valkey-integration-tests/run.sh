@@ -70,19 +70,15 @@ repos=("valkey" "valkey-json" "valkey-bloom" "valkey-search" "valkey-ldap")
 
 for repo in "${repos[@]}"; do
     if [ ! -d "./$repo" ]; then
-        if [[ "$repo" == "valkey" ]]; then
-            echo "Cloning $repo from tag $VALKEY_TAG"
-            git clone -b "$VALKEY_TAG" --depth=1 "https://github.com/valkey-io/$repo.git" "./$repo"
-        elif [[ "$repo" == "valkey-json" ]]; then
-            echo "Cloning $repo from version tag $JSON_TAG"
-            git clone -b "$JSON_TAG" --depth=1 "https://github.com/valkey-io/$repo.git" "./$repo"
-        elif [[ "$repo" == "valkey-bloom" ]]; then
-            echo "Cloning $repo from version tag $BLOOM_TAG"
-            git clone -b "$BLOOM_TAG" --depth=1 "https://github.com/valkey-io/$repo.git" "./$repo"
-        else
-            echo "Cloning $repo from main branch"
-            git clone --depth=1 "https://github.com/valkey-io/$repo.git" "./$repo"
-        fi
+        case "$repo" in
+            valkey)       tag="$VALKEY_TAG" ;;
+            valkey-json)  tag="$JSON_TAG" ;;
+            valkey-bloom) tag="$BLOOM_TAG" ;;
+            valkey-search) tag="$SEARCH_TAG" ;;
+            valkey-ldap)  tag="$LDAP_TAG" ;;
+        esac
+        echo "Cloning $repo from branch/tag $tag"
+        git clone -b "$tag" --depth=1 "https://github.com/valkey-io/$repo.git" "./$repo"
     fi
 done
 
