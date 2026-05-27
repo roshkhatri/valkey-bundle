@@ -148,7 +148,8 @@ run_tests() {
 
             docker run -d -p $VALKEY_PORT:6379 --name "$CONTAINER_NAME" "$image" \
                 valkey-server \
-                --enable-debug-command yes >/dev/null 2>&1
+                --enable-debug-command yes \
+                --json.debug-mode yes >/dev/null 2>&1
             sleep 3
 
             export SOURCE_DIR="$(pwd)"
